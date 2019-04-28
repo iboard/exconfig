@@ -8,7 +8,7 @@
 
 The application starts a Genserver and caches configuration at runtime.
 
-Loading configuration happens in several steps where each step overwrites
+Loading configuration happens in two steps where each step overwrites
 eventually existing values from previous steps.
 
   - Application.get_env(:app, :key) default
@@ -31,7 +31,7 @@ returns the default.
 
 ## Installation
 
-[Available in Hex](https://hex.pm/docs/publish). The package can be installed
+[Available in Hex](https://hex.pm/packages/exconfig). The package can be installed
 by adding `Exconfig` to your list of dependencies in `mix.exs`:
 
 ```elixir
