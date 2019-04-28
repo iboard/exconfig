@@ -1,5 +1,8 @@
 # Exconfig
 
+[![Documentation](https://img.shields.io/badge/docs-hexpm-blue.svg)](http://hexdocs.pm/exconfig/)
+[![Documentation](https://travis-ci.com/iboard/data_source.svg?branch=master)](https://travis-ci.com/iboard/exconfig)
+
 - [At Github](https://github.com/iboard/exconfig)
 - [Hex](https://hex.pm/packages/exconfig)
 
