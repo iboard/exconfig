@@ -6,7 +6,32 @@
 - [At Github](https://github.com/iboard/exconfig)
 - [Hex](https://hex.pm/packages/exconfig)
 
-The application starts a Genserver and caches configuration at runtime.
+## Context
+
+Don't use ENV-settings for compile-time configuration. (Because it is
+hard to maintain your environment-settings for different deployments.
+
+Imagine you want to build a Docker-image for your Phoenix-application
+and you use something like
+
+```elixir
+   plug SomePlug, config_value: System.get_env("SOME_KEY")
+```
+
+`plug` is a macro and therefore, `SOME_KEY` gets evaluated at
+compile time. If `SOME_KEY` is customer-related, this setting
+get's burned into the image and may surprisingly pop up at the
+wrong customer's server.
+
+The `Exconfig`-package will help you not to make this mistake.
+Just use `Exconfig.get` instead of all your `Application.get_env`
+and `System.get_env` calls. Because the cache-server of `Exconfig`
+will not run at compile-time you'll get a compile-error if you
+try to use System-envs from your busines-logic.
+
+## Usage
+
+The application starts a GenServer and caches configuration at run time.
 
 Loading configuration happens in two steps where each step overwrites
 eventually existing values from previous steps.
@@ -14,7 +39,7 @@ eventually existing values from previous steps.
   - Application.get_env(:app, :key) default
   - System.get_env(:key) default
 
-Once the value is cached it will be returned from the GenServer's state
+Once the value is cached it will be returned from the GenServer state
 rather than re-reading it from the environment again.
 
 Using `Exconfig.clear_cache!/0` will drop the cache and values will be
