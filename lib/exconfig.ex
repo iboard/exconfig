@@ -103,8 +103,10 @@ defmodule Exconfig do
     end
   end
 
-  defp normalize_env_key(key) when is_atom(key) do
-    to_string(key)
+  defp normalize_env_key(key) when is_atom(key), do: to_string(key) |> normalize_env_key()
+
+  defp normalize_env_key(key) when is_binary(key) do
+    key
     |> String.upcase()
   end
 
