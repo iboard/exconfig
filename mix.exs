@@ -16,7 +16,7 @@ defmodule Exconfig.MixProject do
       homepage_url: "https://hexdocs.pm/exconfig",
       docs: [
         # The main page in the docs
-        main: "README",
+        main: "readme",
         logo: "assets/logo.png",
         extras: ["README.md", "LICENSE.md"]
       ]
