@@ -50,9 +50,21 @@ loaded again if being accessed later.
     iex> value = Exconfig.get(:my_app, :foo, "bar" )
     "bar"
 
+    iex> value = Exconfig.get(:env, :some_secret )
+    nil
+
 `Exconfig.get/3` will first lookup for :myapp/:foo in the Exconfig.Cache 
 (a GenServer) and if not found load from `Application`, `System`, or
-returns the default.
+returns the default. The second example will read from env-var SOME_SECRET.
+Because no default value is given, it will return `nil`
+
+## configuration.log
+
+`Exconfig.get/3` is a macro. At compile-time in any environment but `:prod`,
+it will capture it's usage in a file. The file can be configured in `config.ex`
+and defaults to `configuration.log`.
+
+The File can be used as a template for a shell-script.
 
 ## Installation
 
@@ -62,7 +74,7 @@ by adding `Exconfig` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:exconfig, "~> 0.1.0"}
+    {:exconfig, "~> 0.1.1"}
   ]
 end
 ```
