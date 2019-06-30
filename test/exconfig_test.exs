@@ -56,10 +56,13 @@ defmodule ExconfigTest do
   test "Write to configuration log" do
     s1 = Exconfig.get(:env, :s1, "v1")
     s2 = Exconfig.get(:env, :s2, "v2")
+    s3 = Exconfig.get(:env, "S3", 1)
     subject = File.read!("configuration.log")
     assert s1 == "v1"
     assert s2 == "v2"
+    assert s3 == 1
     assert Regex.match?(~r/S1="v1"/, subject)
     assert Regex.match?(~r/S2="v2"/, subject)
+    assert Regex.match?(~r/S3="1"/, subject)
   end
 end

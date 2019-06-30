@@ -70,11 +70,20 @@ defmodule Exconfig.ConfigLogger do
     |> IO.binwrite(formatted)
   end
 
-  defp format_entry({:env, key, nil}),
-    do: String.upcase("#{key}") <> "=\"DEFAULTS TO NIL\""
+  defp format_entry({:env, key, default}) when is_atom(key) do
+    key = Atom.to_string(key) |> String.upcase()
+    format_entry({:env, key, default})
+  end
 
-  defp format_entry({:env, key, default}),
-    do: String.upcase("#{key}") <> "=" <> inspect(default)
+  defp format_entry({:env, key, nil}) when is_binary(key),
+    do: "#{key}" <> "=\"DEFAULTS TO NIL\""
+
+  defp format_entry({:env, key, default}) when is_binary(key) and is_number(default) do
+    format_entry({:env, key, "#{default}"})
+  end
+
+  defp format_entry({:env, key, default}) when is_binary(key),
+    do: "#{key}" <> "=" <> inspect(default)
 
   defp format_entry({env, key, value}),
     do: "# Configured in #{inspect(env)}, #{inspect(key)}, #{inspect(value)}"
