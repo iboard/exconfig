@@ -57,6 +57,7 @@ defmodule ExconfigTest do
     s1 = Exconfig.get(:env, :s1, "v1")
     s2 = Exconfig.get(:env, :s2, "v2")
     s3 = Exconfig.get(:env, "S3", 1)
+    :timer.sleep(250)
     subject = File.read!("configuration.log")
     assert s1 == "v1"
     assert s2 == "v2"

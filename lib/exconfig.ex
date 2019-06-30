@@ -23,7 +23,7 @@ defmodule Exconfig do
   and then reads the configuration as usual.
   """
   defmacro get(env, key, default \\ nil) do
-    Exconfig.ConfigLogger.record_usage(env, key, default)
+    unless Mix.env() == :prod, do: Exconfig.ConfigLogger.record_usage(env, key, default)
 
     quote do
       e = unquote(env)

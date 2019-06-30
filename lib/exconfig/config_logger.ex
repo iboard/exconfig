@@ -67,7 +67,7 @@ defmodule Exconfig.ConfigLogger do
 
     File.open(state.filename, [:append])
     |> elem(1)
-    |> IO.binwrite(formatted)
+    |> IO.binwrite(formatted <> "\n")
   end
 
   defp format_entry({:env, key, default}) when is_atom(key) do
