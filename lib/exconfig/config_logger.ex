@@ -70,8 +70,11 @@ defmodule Exconfig.ConfigLogger do
     |> IO.binwrite(formatted)
   end
 
-  defp format_entry({:env, key, value}),
-    do: String.upcase("#{key}") <> "=\"#{value}\""
+  defp format_entry({:env, key, nil}),
+    do: String.upcase("#{key}") <> "=\"DEFAULTS TO NIL\""
+
+  defp format_entry({:env, key, default}),
+    do: String.upcase("#{key}") <> "=" <> inspect(default)
 
   defp format_entry({env, key, value}),
     do: "# Configured in #{inspect(env)}, #{inspect(key)}, #{inspect(value)}"
