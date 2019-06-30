@@ -4,8 +4,8 @@ defmodule Exconfig.MixProject do
   def project do
     [
       app: :exconfig,
-      version: "0.1.0",
-      elixir: "~> 1.8",
+      version: "0.1.1",
+      elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       package: package(),
       description: description(),
@@ -18,7 +18,7 @@ defmodule Exconfig.MixProject do
         # The main page in the docs
         main: "readme",
         logo: "assets/logo.png",
-        extras: ["README.md", "LICENSE.md"]
+        extras: ["README.md", "LICENSE.md", "CHANGELOG.md"]
       ]
     ]
   end
@@ -33,7 +33,7 @@ defmodule Exconfig.MixProject do
   def package do
     [
       name: "exconfig",
-      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*", "CHANGELOG*"],
       maintainers: ["andreas@altendorfer.at"],
       licenses: ["MIT"],
       links: %{

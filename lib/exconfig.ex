@@ -9,8 +9,21 @@ defmodule Exconfig do
     - and `clear_cache!/0` ... remove all entries from the cache
 
   All usage of `Exconfig.get` will be captured and written to
-  `configuration.log` at termination. `configuration.log` can be
-  used as a template for creating your `setup.env` file.
+  `configuration.log` at termination.
+
+  ### Configuration
+
+      config :exconfig, config_log_file: "configuration.log"
+
+  When you compile your application for any evnironment but `prod`,
+  the macro will record the usage of it. In production environment
+  this doesn't happen and using the macro is a straight forward call
+  to `Exconfig._get(env, key, default)`
+
+  ### configuration.log
+
+  `configuration.log` can be used as a template for creating your `setup.env` file.
+
   """
 
   require Logger
