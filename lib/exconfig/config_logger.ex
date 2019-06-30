@@ -65,7 +65,7 @@ defmodule Exconfig.ConfigLogger do
       |> Enum.map(fn entry -> format_entry(entry) end)
       |> Enum.join("\n")
 
-    File.open(state.filename, [:write])
+    File.open(state.filename, [:append])
     |> elem(1)
     |> IO.binwrite(formatted)
   end
