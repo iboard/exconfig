@@ -5,13 +5,33 @@ defmodule Exconfig do
   This is
 
     - `get/0` ... get all cached settings
-    - `get/3` ... get a specific entry (read if not cached)
+    - `get/3` ... get a specific entry (read if not cached) [macro]
     - and `clear_cache!/0` ... remove all entries from the cache
 
-
+  All usage of `Exconfig.get` will be captured and written to
+  `configuration.log` at termination. `configuration.log` can be
+  used as a template for creating your `setup.env` file.
   """
 
+  require Logger
+  require Exconfig.ConfigLogger
+
   alias Exconfig.Cache
+
+  @doc """
+  The macro records the usage of `get` with the `Exconfig.ConfigLogger` module
+  and then reads the configuration as usual.
+  """
+  defmacro get(env, key, default \\ nil) do
+    Exconfig.ConfigLogger.record_usage(env, key, default)
+
+    quote do
+      e = unquote(env)
+      k = unquote(key)
+      d = unquote(default)
+      Exconfig._get(e, k, d)
+    end
+  end
 
   @doc """
   Get the entire loaded cache.
@@ -60,7 +80,7 @@ defmodule Exconfig do
 
 
   """
-  def get(application_key, key, default \\ nil) do
+  def _get(application_key, key, default \\ nil) do
     lookup(application_key, key, default)
     |> load()
     |> loaded_or_default()

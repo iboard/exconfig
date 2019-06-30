@@ -2,6 +2,7 @@ defmodule ExconfigTest do
   use ExUnit.Case
   doctest Exconfig
   doctest Exconfig.Cache
+  require Exconfig
 
   setup _ do
     Exconfig.clear_cache!()
@@ -50,5 +51,15 @@ defmodule ExconfigTest do
       value = Exconfig.get(:exconfig, :elixirrules)
       assert "yes it do" == value
     end
+  end
+
+  test "Write to configuration log" do
+    s1 = Exconfig.get(:env, :s1, "v1")
+    s2 = Exconfig.get(:env, :s2, "v2")
+    subject = File.read!("configuration.log")
+    assert s1 == "v1"
+    assert s2 == "v2"
+    assert Regex.match?(~r/S1="v1"/, subject)
+    assert Regex.match?(~r/S2="v2"/, subject)
   end
 end
