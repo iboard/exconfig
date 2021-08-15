@@ -74,7 +74,7 @@ by adding `Exconfig` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:exconfig, "~> 0.1.1"}
+    {:exconfig, "~> 0.2.0"}
   ]
 end
 ```
